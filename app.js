@@ -1,22 +1,33 @@
 const $=s=>document.querySelector(s);
-const clubs=[['InSIM',3],['IMMIX',4],['CNN',5],['MCSIM',6],['MY-SIM',7],['SIS',8],['SKC',9],['VNC',10]];
+const clubs=[
+ {name:'INSIM',image:3,title:'The New Era',type:'Traditional Indonesian Dance',detail:"Experience the beauty of Indonesian heritage through graceful movements, expressive rhythms, and vibrant traditional dance."},
+ {name:'IMMIX',image:4,title:'Echoes of Heritage',type:'Multicultural Fusion Dance',detail:"A creative fusion of cultural influences, combining Western-inspired energy and Taiwanese elements through dynamic choreography."},
+ {name:'CNN',image:5,title:'Tales of Chang’an',type:'Chinese Historical Musical & Traditional Dance',detail:"Journey into Tang Dynasty Chang'an, where a mystery unfolds at the Dali Temple through captivating storytelling and traditional Chinese dance."},
+ {name:'MCSIM',image:6,title:'Igniting The Cosmos',type:'24 Festive Drums',detail:"Experience the powerful rhythms of Malaysia's 24 Festive Drums, bringing together synchronized movements, cultural spirit, and vibrant energy."},
+ {name:'MYSIM',image:7,title:'LAMLIAN LEHLAM (Mystical Fusion of the Mizo Dance)',type:'Traditional Myanmar Dance',detail:"Celebrate Myanmar's cultural traditions through elegant movements, graceful choreography, and rhythmic storytelling."},
+ {name:'SIS',image:8,title:'Ananta; Love beyond lifetimes',type:'Cinematic Indian Dance',detail:"A cinematic dance performance blending emotion, expressive choreography, and dramatic storytelling."},
+ {name:'SKC',image:9,title:'Joseon Galaxy: A Journey to K-pop',type:'K-pop Dance',detail:"An energetic celebration of K-pop, featuring dynamic choreography, exciting rhythms, and modern Korean pop culture."},
+ {name:'VNC',image:10,title:'The Tale of Kieu',type:'Traditional Vietnamese Dance',detail:"Discover the elegance of Vietnamese heritage through traditional dance, expressive movements, and cultural storytelling."}
+];
 const pages=[
  {name:'Cover',image:1},
  {name:'About ISN',image:2},
- ...clubs.map(([name,image])=>({name,image})),
+ ...clubs.map(club=>({name:club.name,image:club.image})),
  {name:'Performances',kind:'gallery'},
- {name:'Behind the Scenes',image:11},
- ...[12,13,14,15].map((image,i)=>({name:`Interviews · ${i+1}`,image})),
- {name:'Facebook',image:16},
- {name:'Feedback',image:17}
+ {name:'Dinner',image:11},
+ {name:'Behind the Scenes',image:12},
+ ...[13,14,15,16,17,18,19,20].map((image,i)=>({name:`Interview · ${i+1}`,image})),
+ {name:'Best Dressed',image:21},
+ {name:'Feedback',image:22},
+ {name:'Thank You',image:23}
 ];
 const galleryIndex=pages.findIndex(p=>p.kind==='gallery');
-const assetVersion='20261021';
+const assetVersion='20261111';
 
 let page=0,selected=0,turn=0,swipeBlock=false,start=null,opener=null,turning=false;
-clubs.forEach(([club,p],i)=>{const b=document.createElement('button');b.className='performance';b.innerHTML=`<span class="card-star" aria-hidden="true">✦</span><span class="club">${club}</span><small>Explore performance</small>`;b.setAttribute('aria-label',`View ${club} performance`);b.onclick=()=>{if(swipeBlock)return;selected=i;turn=i;renderOrbit();showDetail(b)};$('#cards').appendChild(b)});
-function renderOrbit(){[...$('#cards').children].forEach((b,i)=>{const angle=(i-turn)*2*Math.PI/clubs.length,z=Math.cos(angle),w=$('#paper').clientWidth;b.style.transform=`translateX(${Math.sin(angle)*w*.31}px) translateY(${-z*w*.02}px) rotateY(${-Math.sin(angle)*24}deg) rotateZ(${Math.sin(angle)*7}deg) scale(${.64+.36*(z+1)/2})`;b.style.zIndex=Math.round((z+1)*20);b.style.opacity=z<-.1?'0':String(.35+.65*z);b.style.pointerEvents=z<-.1?'none':'auto';b.disabled=z<-.1;b.setAttribute('aria-current',String(i===selected))});$('#selection').textContent=`${clubs[selected][0]} · ${selected+1} / ${clubs.length}`;$('#open-detail').hidden=false;$('.hint').textContent='Swipe the cards · Tap to discover';}
-function render(){const current=pages[page],isGallery=current.kind==='gallery';$('#page-image').hidden=isGallery;$('#gallery').hidden=!isGallery;if(!isGallery){$('#page-image').src=`assets/page-${current.image}.jpg?v=${assetVersion}`;$('#page-image').alt=`ISN booklet · ${current.name}`}$('#label').textContent=current.name;$('#count').textContent=`${String(page+1).padStart(2,'0')} / ${pages.length}`;$('#previous').disabled=page===0;$('#next').disabled=page===pages.length-1;document.querySelectorAll('[data-section]').forEach(b=>{const n=Number(b.dataset.section),end=Number(b.dataset.end??n);b.classList.toggle('active',page>=n&&page<=end)});if(isGallery)renderOrbit();$('#corner-prev').hidden=page===0;$('#corner-next').hidden=page===pages.length-1;}
+clubs.forEach((club,i)=>{const b=document.createElement('button');b.className='performance';b.innerHTML=`<span class="card-star" aria-hidden="true">✦</span><span class="club">${club.name}</span><small>Explore performance</small>`;b.setAttribute('aria-label',`View ${club.name} performance`);b.onclick=()=>{if(swipeBlock)return;selected=i;turn=i;renderOrbit();showDetail(b)};$('#cards').appendChild(b)});
+function renderOrbit(){[...$('#cards').children].forEach((b,i)=>{const angle=(i-turn)*2*Math.PI/clubs.length,z=Math.cos(angle),w=$('#paper').clientWidth;b.style.transform=`translateX(${Math.sin(angle)*w*.31}px) translateY(${-z*w*.02}px) rotateY(${-Math.sin(angle)*24}deg) rotateZ(${Math.sin(angle)*7}deg) scale(${.64+.36*(z+1)/2})`;b.style.zIndex=Math.round((z+1)*20);b.style.opacity=z<-.1?'0':String(.35+.65*z);b.style.pointerEvents=z<-.1?'none':'auto';b.disabled=z<-.1;b.setAttribute('aria-current',String(i===selected))});$('#selection').textContent=`${clubs[selected].name} · ${selected+1} / ${clubs.length}`;$('#open-detail').hidden=false;$('.hint').textContent='Swipe the cards · Tap to discover';}
+function render(){const current=pages[page],isGallery=current.kind==='gallery';$('#page-image').hidden=isGallery;$('#gallery').hidden=!isGallery;$('#best-dressed-qr').hidden=current.image!==21;if(!isGallery){$('#page-image').src=`assets/page-${current.image}.jpg?v=${assetVersion}`;$('#page-image').alt=`ISN booklet · ${current.name}`}$('#label').textContent=current.name;$('#count').textContent=`${String(page+1).padStart(2,'0')} / ${pages.length}`;$('#previous').disabled=page===0;$('#next').disabled=page===pages.length-1;document.querySelectorAll('[data-section]').forEach(b=>{const n=Number(b.dataset.section),end=Number(b.dataset.end??n);b.classList.toggle('active',page>=n&&page<=end)});if(isGallery)renderOrbit();$('#corner-prev').hidden=page===0;$('#corner-next').hidden=page===pages.length-1;}
 
 function snapshot(){const copy=$('#sheet').cloneNode(true);copy.removeAttribute('id');copy.className='turn-content';copy.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));copy.setAttribute('aria-hidden','true');copy.inert=true;return copy}
 async function go(n){const target=Math.max(0,Math.min(pages.length-1,n));if(target===page||turning)return;const direction=target>page?1:-1;
@@ -28,7 +39,7 @@ const motion=leaf.animate([{transform:'rotateY(0deg)',filter:'brightness(1)',off
 shade.animate([{opacity:.55},{opacity:.3,offset:.5},{opacity:0}],{duration:760,fill:'forwards'});await motion.finished;
 }finally{leaf.remove();shade.remove();paper.classList.remove('is-turning');paper.removeAttribute('aria-busy');turning=false}}
 
-function showDetail(button){opener=button;$('#detail-number').textContent=`PROGRAMME SLOT ${String(selected+1).padStart(2,'0')}`;$('#detail-club').textContent=clubs[selected][0];$('#detail').showModal()}
+function showDetail(button){opener=button;const club=clubs[selected];$('#detail-number').textContent=`PROGRAMME SLOT ${String(selected+1).padStart(2,'0')}`;$('#detail-club').textContent=club.name;$('#detail-title').textContent=club.title;$('#detail-type').textContent=club.type;$('#detail-description').textContent=club.detail;$('#detail').showModal()}
 function closeDetail(){$('#detail').close();if(opener&&opener.isConnected)opener.focus()}
 function rotate(d){turn+=d;selected=((turn%clubs.length)+clubs.length)%clubs.length;renderOrbit()}
 $('#rotate-left').onclick=()=>rotate(-1);$('#rotate-right').onclick=()=>rotate(1);$('#open-detail').onclick=()=>showDetail($('#open-detail'));$('#back-gallery').onclick=closeDetail;$('#return-gallery').onclick=closeDetail;$('#previous').onclick=()=>go(page-1);$('#corner-prev').onclick=()=>go(page-1);$('#corner-next').onclick=()=>go(page+1);$('#next').onclick=()=>go(page+1);$('#contents-open').onclick=()=>$('#contents').showModal();$('#contents-close').onclick=()=>$('#contents').close();document.querySelectorAll('[data-section]').forEach(b=>b.onclick=()=>{go(Number(b.dataset.section));$('#contents').close()});
