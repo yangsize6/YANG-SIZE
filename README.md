@@ -32,3 +32,7 @@ booklet until a deployment integration is configured.
 ## Hosting
 This is a static website. No build command is required.
 The repository root is the publish directory for a static host.
+
+## Performance spotlights
+The interactive Performances page includes a short creative English description for each of the eight clubs (INSIM, IMMIX, CNN, MCSIM, MYSIM, SIS, SKC, VNC). These descriptions are editorial copy based on informal programme notes, not official club-submitted synopses.
+The Best Dressed QR overlay/link from V4 is preserved.
