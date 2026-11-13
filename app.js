@@ -22,7 +22,7 @@ const pages=[
  {name:'Thank You',image:23}
 ];
 const galleryIndex=pages.findIndex(p=>p.kind==='gallery');
-const assetVersion='20261113-v7-centered-logos';
+const assetVersion='20261113-v8-padded-logos';
 
 let page=0,selected=0,turn=0,swipeBlock=false,start=null,opener=null,turning=false;
 clubs.forEach((club,i)=>{const b=document.createElement('button');b.className='performance';b.style.setProperty('--club-background',`url("assets/club-backgrounds/${club.name.toLowerCase()}.svg?v=${assetVersion}")`);b.innerHTML=`<span class="logo-frame"><img class="club-logo" src="assets/logos/${club.name.toLowerCase()}.svg?v=${assetVersion}" alt="" loading="eager"></span><span class="club">${club.name}</span><small>Explore performance</small>`;b.setAttribute('aria-label',`View ${club.name} performance`);b.onclick=()=>{if(swipeBlock)return;selected=i;turn=i;renderOrbit();showDetail(b)};$('#cards').appendChild(b)});
