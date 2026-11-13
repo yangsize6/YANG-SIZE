@@ -22,12 +22,11 @@ for (const [index, club] of clubs.entries()) {
   const [x, y, width, height] = bounds[index];
   const jpg = readFileSync(join(root, 'assets', `page-${page}.jpg`)).toString('base64');
   // Original artwork: 608 × 1080. The logo sits at the lower-right corner.
-  // MYSIM and VNC touch the bottom edge of the source page. Give them extra
-  // breathing room in the SVG canvas so they sit centrally inside the card.
-  const [left, top, right, bottom] = club === 'MYSIM' ? [8, 6, 8, 22]
-    : club === 'VNC' ? [8, 8, 8, 20] : [0, 0, 0, 0];
+  // MYSIM uses the supplied clean round logo (mysim.png). VNC uses a
+  // luminance-masked logo (vnc.png), avoiding the rectangular sky backdrop.
+  const [left, top, right, bottom] = [0, 0, 0, 0];
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width + left + right} ${height + top + bottom}" role="img" aria-label="${club} logo"><image href="data:image/jpeg;base64,${jpg}" x="${left-x}" y="${top-y}" width="608" height="1080" /></svg>`;
-  writeFileSync(join(output, `${club.toLowerCase()}.svg`), svg);
+  if (club !== 'MYSIM' && club !== 'VNC') writeFileSync(join(output, `${club.toLowerCase()}.svg`), svg);
   // Upper-left area of each original introduction page: only sky/planet,
   // safely above and to the left of the page's headings and photographs.
   const background = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 178 190"><image href="data:image/jpeg;base64,${jpg}" width="608" height="1080" /></svg>`;
