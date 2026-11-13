@@ -5,7 +5,7 @@ const clubs=[
  {name:'CNN',image:5,title:'Tales of Chang’an',type:'Chinese Historical Musical & Traditional Dance',detail:"Journey into Tang Dynasty Chang'an, where a mystery unfolds at the Dali Temple through captivating storytelling and traditional Chinese dance."},
  {name:'MCSIM',image:6,title:'Igniting The Cosmos',type:'24 Festive Drums',detail:"Experience the powerful rhythms of Malaysia's 24 Festive Drums, bringing together synchronized movements, cultural spirit, and vibrant energy."},
  {name:'MYSIM',image:7,title:'LAMLIAN LEHLAM (Mystical Fusion of the Mizo Dance)',type:'Traditional Myanmar Dance',detail:"Celebrate Myanmar's cultural traditions through elegant movements, graceful choreography, and rhythmic storytelling."},
- {name:'SIS',image:8,title:'Ananta; Love beyond lifetimes',type:'An Indian Dance Story',detail:"A heartfelt performance inspired by the timeless love of the Sun and the Moon. Through graceful movement, powerful music, and expressive storytelling, Ananta brings a love that transcends lifetimes to the stage."},
+ {name:'SIS',image:8,title:'Ananta; Love Beyond Lifetimes',type:'An Indian Dance Story',detail:"A heartfelt performance inspired by the timeless love of the Sun and the Moon. Through graceful movement, powerful music, and expressive storytelling, Ananta brings a love that transcends lifetimes to the stage."},
  {name:'SKC',image:9,title:'Joseon Galaxy: A Journey to K-pop',type:'K-pop Dance',detail:"An energetic celebration of K-pop, featuring dynamic choreography, exciting rhythms, and modern Korean pop culture."},
  {name:'VNC',image:10,title:'The Tale of Kieu',type:'Traditional Vietnamese Dance',detail:"Discover the elegance of Vietnamese heritage through traditional dance, expressive movements, and cultural storytelling."}
 ];
@@ -22,7 +22,7 @@ const pages=[
  {name:'Thank You',image:23}
 ];
 const galleryIndex=pages.findIndex(p=>p.kind==='gallery');
-const assetVersion='20261112-v4';
+const assetVersion='20261113-v5-chinese-model';
 
 let page=0,selected=0,turn=0,swipeBlock=false,start=null,opener=null,turning=false;
 clubs.forEach((club,i)=>{const b=document.createElement('button');b.className='performance';b.innerHTML=`<span class="card-star" aria-hidden="true">✦</span><span class="club">${club.name}</span><small>Explore performance</small>`;b.setAttribute('aria-label',`View ${club.name} performance`);b.onclick=()=>{if(swipeBlock)return;selected=i;turn=i;renderOrbit();showDetail(b)};$('#cards').appendChild(b)});
