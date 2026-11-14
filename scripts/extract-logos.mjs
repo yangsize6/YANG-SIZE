@@ -22,8 +22,8 @@ for (const [index, club] of clubs.entries()) {
   const [x, y, width, height] = bounds[index];
   const jpg = readFileSync(join(root, 'assets', `page-${page}.jpg`)).toString('base64');
   // Original artwork: 608 × 1080. The logo sits at the lower-right corner.
-  // MYSIM uses the supplied clean round logo (mysim.png). VNC uses a
-  // luminance-masked logo (vnc.png), avoiding the rectangular sky backdrop.
+  // MYSIM uses the supplied clean round logo (mysim.png). VNC uses the
+  // confirmed coloured SIA VNC logo (vnc.png), extracted from its club post.
   const [left, top, right, bottom] = [0, 0, 0, 0];
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width + left + right} ${height + top + bottom}" role="img" aria-label="${club} logo"><image href="data:image/jpeg;base64,${jpg}" x="${left-x}" y="${top-y}" width="608" height="1080" /></svg>`;
   if (club !== 'MYSIM' && club !== 'VNC') writeFileSync(join(output, `${club.toLowerCase()}.svg`), svg);
